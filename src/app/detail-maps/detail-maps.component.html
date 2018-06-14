@@ -1,0 +1,30 @@
+<div class="ngx-detail-maps">
+  <agm-map
+    [latitude]="lat"
+    [longitude]="lng"
+    [zoom]="zoom"
+    [disableDefaultUI]="false"
+    [zoomControl]="false" >
+
+    <agm-marker
+        *ngFor="let m of markers; let i = index"
+        (markerClick)="clickedMarker(m.label, i)"
+        [latitude]="m.lat"
+        [longitude]="m.lng"
+        [label]="m.label"
+        [markerDraggable]="m.draggable"
+        (dragEnd)="markerDragEnd(m, $event)">
+      <agm-info-window>
+        <strong>{{m.infoWindow}}</strong>
+      </agm-info-window>
+    </agm-marker>
+
+    <agm-direction *ngIf="completed" [origin]="completed.origin" [destination]="completed.destination" [renderOptions]="renderRedOptions"></agm-direction>
+    <agm-direction *ngIf="processing" [origin]="processing.origin" [destination]="processing.destination" [renderOptions]="renderGreenOptions"></agm-direction>
+
+  </agm-map>
+
+  <label>Quãng đường: {{totalDistance}}</label>
+  <br>
+  <label>Thời gian: {{totalDuration}}</label>
+</div>
